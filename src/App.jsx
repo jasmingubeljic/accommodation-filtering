@@ -1,33 +1,23 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Container from "./components/Container/Container";
+import AccomodationPage from "./components/pages/AccomodationPage";
 import './App.css'
-import { useEffect, useState } from "react";
-import { getAccomodations } from "./util/apiCalls";
 
 function App() {
-  const [accomodations, setAccomodations] = useState([])
-
-  useEffect(() => {
-    getAccomodations(
-      (r) => setAccomodations(r),
-      (err) => console.log(err)
-    );
-  }, []);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Container />,
+      id: "wrapperComponent",
+      children: [
+        { path: "/", element: <AccomodationPage /> },
+      ],
+    },
+  ]);
 
 
   return (
-    <>
-      <h1>React with Vite</h1>
-      {accomodations.map((a) => {
-        return (
-          <div key={a.id}>
-            <img src={a.image}></img>
-            <p>{a.title}</p>
-            <p>Capacity: {a.capacity}</p>
-            {a.beachDistanceInMeters && <p>Beach Distance: {a.beachDistanceInMeters}m</p>}
-
-          </div>
-        );
-      })}
-    </>
+    <RouterProvider router={router} />
   )
 }
 
