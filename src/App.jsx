@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Container from "./components/Container/Container";
 import AccomodationPage from "./components/pages/AccomodationPage";
+import NotFoundPage from "./components/pages/NotFoundPage";
 import './App.css'
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
       path: "/",
       element: <Container />,
       id: "wrapperComponent",
+      errorElement: <NotFoundPage />,
       children: [
         { path: "/", element: <AccomodationPage /> },
       ],
