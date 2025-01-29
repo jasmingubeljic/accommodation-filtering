@@ -13,7 +13,6 @@ export default function AccomodationPage() {
 
   return (
     <>
-      <h1>Accomodations</h1>
       {accomodations.map((a) => {
         return (
           <div key={a.id}>
