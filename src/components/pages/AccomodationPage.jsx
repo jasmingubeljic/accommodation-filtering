@@ -94,7 +94,7 @@ export default function AccomodationPage() {
             <Link key={a.id} to={`/accomodation/${a.id}`}>
               <div className="rounded-t-md shadow-sm overflow-hidden hover:shadow-md">
                 <img src={a.image} className="w-100 aspect-9/5 object-cover" />
-                <div className="p-3">
+                <div className="p-2 flex flex-col gap-1 h-25">
                   <p className="font-bold uppercase truncate opacity-75">
                     {a.title}
                   </p>
