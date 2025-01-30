@@ -29,6 +29,7 @@ export default function Filters(props) {
             minDate={new Date()}
             isClearable
             placeholderText="Select dates"
+            dateFormat="yyyy-MM-dd"
           />
           <label htmlFor="Capacity">Reservation dates</label>
         </div>
