@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -6,28 +6,29 @@ import "react-datepicker/dist/react-datepicker.css";
 export default function Filters(props) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
+
   const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
   };
 
-  useEffect( () => {
-    console.log(startDate, endDate)
-  })
-  
-  
   return (
     <>
       <form onChange={props.onFiltering} className="mb-10">
         <div className="flex gap-2 p-1 m-1 bg-indigo-50 rounded-md items-center content-start">
           <DatePicker
             selected={startDate}
-            onChange={onChange}
+            onChange={(event) => {
+              props.onFiltering(event);
+              onChange(event);
+            }}
             startDate={startDate}
             endDate={endDate}
             selectsRange
             minDate={new Date()}
+            isClearable
+            placeholderText="Select dates"
           />
           <label htmlFor="Capacity">Reservation dates</label>
         </div>

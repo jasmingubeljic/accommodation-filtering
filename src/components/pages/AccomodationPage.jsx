@@ -5,7 +5,7 @@ import Filters from "../Filter/Filter";
 
 export default function AccomodationPage() {
   const [accomodations, setAccomodations] = useState([]);
-  const [filters, setFilters] = useState({})
+  const [filters, setFilters] = useState({});
   const [filteredAccomodations, setFilteredAccomodations] = useState([]);
 
   useEffect(() => {
@@ -18,72 +18,86 @@ export default function AccomodationPage() {
     );
   }, []);
 
-  useEffect( () => {
+  useEffect(() => {
+
+    // Filtering logic
     const fa = accomodations.filter((a) => {
-      let isAllTrue = []
-      if(filters.capacity) {
-        isAllTrue.push(filters.capacity <= a.capacity)
+      let isAllTrue = [];
+      if (filters.capacity) {
+        isAllTrue.push(filters.capacity <= a.capacity);
       }
-      if(filters.airConditioning) {
-        isAllTrue.push(a.amenities.airConditioning)
+      if (filters.airConditioning) {
+        isAllTrue.push(a.amenities.airConditioning);
       }
-      if(filters.parkingSpace) {
-        isAllTrue.push(a.amenities.airConditioning)
+      if (filters.parkingSpace) {
+        isAllTrue.push(a.amenities.airConditioning);
       }
-      if(filters.pets) {
-        isAllTrue.push(a.amenities.pets)
+      if (filters.pets) {
+        isAllTrue.push(a.amenities.pets);
       }
-      if(filters.pool) {
-        isAllTrue.push(a.amenities.pool)
+      if (filters.pool) {
+        isAllTrue.push(a.amenities.pool);
       }
-      if(filters.wifi) {
-        isAllTrue.push(a.amenities.wifi)
+      if (filters.wifi) {
+        isAllTrue.push(a.amenities.wifi);
       }
-      if(filters.tv) {
-        isAllTrue.push(a.amenities.tv)
+      if (filters.tv) {
+        isAllTrue.push(a.amenities.tv);
       }
-      return !isAllTrue.includes(false)
+      return !isAllTrue.includes(false);
     });
 
-    setFilteredAccomodations(fa)
+    setFilteredAccomodations(fa);
+    console.log("filters: ", filters);
+  }, [filters, accomodations]);
 
-  
-  }, [filters, accomodations])
 
-  const onFilteringHandler = useCallback(
-    (event) => {
-      const name = event.target.name;
+  const onFilteringHandler = useCallback((event) => {
 
-      if(event.target.type == 'checkbox' && event.target.checked) {
-        setFilters(prevState => {
-          return {
-          ...prevState,
-          [name]: event.target.checked
-        }
-        })
-      } else {
-        setFilters(prevState => {
-          const obj = {...prevState}
-          delete obj[name]
-          return obj
-        })
-      }
-
-      if(event.target.type == 'number') {
-        setFilters(prevState => {
+    // handle range picker
+    if (!event.target) {
+      console.log('event: ', event)
+      if (event.length > 1) {
+        setFilters((prevState) => {
           return {
             ...prevState,
-            [name]: +event.target.value
-          }
-        })
+            selIntervalStart: event[0],
+            selIntervalEnd: event[1]
+          };
+        });
       }
-    },
-    []
-  );
+      return;
+    }
 
-  // const includesData = (obj1, obj2) => {
-  //   return Object.keys(obj2).every(key => obj1[key] === obj2[key]);
-  // }
+    // handle remaining filters
+    const name = event.target.name;
+    console.log("event:   ", event);
+
+    if (event.target.type == "checkbox" && event.target.checked) {
+      setFilters((prevState) => {
+        return {
+          ...prevState,
+          [name]: event.target.checked,
+        };
+      });
+    } else {
+      setFilters((prevState) => {
+        const obj = { ...prevState };
+        delete obj[name];
+        return obj;
+      });
+    }
+
+    if (event.target.type == "number") {
+      setFilters((prevState) => {
+        return {
+          ...prevState,
+          [name]: +event.target.value,
+        };
+      });
+    }
+  }, []);
+
 
   return (
     <>
