@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Container from "./components/Container/Container";
 import AccomodationPage from "./components/pages/AccomodationPage";
 import NotFoundPage from "./components/pages/NotFoundPage";
+import AccomodationDetailsPage from "./components/pages/AccomodationDetailsPage";
 import './App.css'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       errorElement: <NotFoundPage />,
       children: [
         { path: "/", element: <AccomodationPage /> },
+        { path: "/accomodation/:id", element: <AccomodationDetailsPage />}
       ],
     },
   ]);

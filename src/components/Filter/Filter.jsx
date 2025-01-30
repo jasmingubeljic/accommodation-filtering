@@ -1,7 +1,7 @@
 export default function Filters(props) {
   return (
     <>
-      <form>
+      <form  onChange={props.onFiltering}>
         <div>
           <input type="number" name="capacity" className="border-1" />
           <label htmlFor="Capacity">Number of Guests</label>
