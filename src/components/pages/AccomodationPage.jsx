@@ -59,8 +59,37 @@ export default function AccomodationPage() {
       if (filters.tv) {
         conditionsMatchingArray.push(a.amenities.tv);
       }
+      if(filters.maxPrice) {
+        if(filters.selIntervalStart && filters.selIntervalEnd) {
+          // take dates into account and prices date related
+          const withinPriceRangeArr = []
+          for (const obj of a.pricelistInEuros) {
+            if(
+              filters.selIntervalStart >= new Date(obj.intervalStart) &&
+              filters.selIntervalEnd <= new Date(obj.intervalEnd)
+              
+            ) {
+              for (const obj of a.pricelistInEuros) {
+                withinPriceRangeArr.push(filters.maxPrice <= obj.pricePerNight) 
+              }
+            }
+          }
+          conditionsMatchingArray.push(
+            withinPriceRangeArr.some(value => value === true)
+          )
+        } else {    
+          // if date range is not selected, we check if condition meets at least one of the season prices 
+          const withinPriceRangeArr = []
+          for (const obj of a.pricelistInEuros) {
+            withinPriceRangeArr.push(filters.maxPrice >= obj.pricePerNight) 
+          }
+          conditionsMatchingArray.push(
+            withinPriceRangeArr.some(value => value === true)
+          )
+        }
+      }
       return conditionsMatchingArray.every(val => val === true)
-    });
+    }); // end of the .filter()
 
     setFilteredAccomodations(fa);
   }, [filters, accomodations]);

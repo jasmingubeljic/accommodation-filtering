@@ -79,13 +79,13 @@ export default function Filters(props) {
         <div className="flex gap-2 p-1 m-1 bg-indigo-50 rounded-md items-center content-start">
           <input
             type="number"
-            name="max_price"
+            name="maxPrice"
             className="border-1"
             step="10"
             min="0"
             defaultValue="0"
           />
-          <label htmlFor="max_price">Maximum price</label>
+          <label htmlFor="maxPrice">Maximum price</label>
         </div>
       </form>
     </>
