@@ -64,7 +64,6 @@ export default function Filters(props) {
             withinPriceRangeArr.some((value) => value === false)
           );
         } else {
-
           // if date range is not selected, we check if condition meets at least one of the season prices
           const withinPriceRangeArr = [];
           for (const obj of a.pricelistInEuros) {
@@ -86,12 +85,16 @@ export default function Filters(props) {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
+    if (start == null && end == null) {
+      props.onDatesSave(false);
+    } else {
+      props.onDatesSave(dates);
+    }
   };
 
   const onFilteringHandler = useCallback((event) => {
     // handle range picker
     if (!event.target) {
-      console.log("event: ", event);
       if (event.length > 1) {
         setFilters((prevState) => {
           return {
@@ -149,8 +152,8 @@ export default function Filters(props) {
             minDate={new Date()}
             isClearable
             placeholderText="📅 Select dates"
-            dateFormat="yyyy-MM-dd"
-            // className="hover:cursor-pointer"
+            dateFormat="yyyy/MM/dd"
+            className="max-w-3xs w-100"
           />
           <label htmlFor="Capacity">Reservation dates</label>
         </div>
