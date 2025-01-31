@@ -138,8 +138,10 @@ export default function Filters(props) {
 
   return (
     <>
-      <form onChange={onFilteringHandler} className="mb-10">
-        <div className="flex gap-2 p-1 m-1 bg-indigo-50 rounded-md items-center content-start">
+      <form onChange={onFilteringHandler} className="my-10 shadow-sm bg-indigo-50 rounded-md">
+        <div className="p-1 m-1 w-auto inline-block bg-gray-50 rounded-md">
+          <label htmlFor="Capacity">Reservation dates:</label>
+          <br></br>
           <DatePicker
             selected={startDate}
             onChange={(event) => {
@@ -155,60 +157,62 @@ export default function Filters(props) {
             dateFormat="yyyy/MM/dd"
             className="max-w-3xs w-100"
           />
-          <label htmlFor="Capacity">Reservation dates</label>
         </div>
+        <br></br>
 
-        <div className="flex gap-2 p-1 m-1 bg-indigo-50 rounded-md items-center content-start">
-          <input
-            type="number"
-            name="capacity"
-            className="border-1"
-            min="1"
-            defaultValue="1"
-          />
-          <label htmlFor="Capacity">Number of Guests</label>
-        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-1 p-1 rounded-md">
+          <div className="flex gap-2 px-2 py-1 rounded-md">
+            <input
+              type="number"
+              name="capacity"
+              className="border-1 border-gray-400 w-11 bg-gray-50"
+              min="1"
+              defaultValue="1"
+            />
+            <label htmlFor="Capacity">Guests</label>
+          </div>
 
-        <div className="flex gap-2 p-1 m-1 bg-indigo-50 rounded-md items-center content-start">
-          <input type="checkbox" name="airConditioning" />
-          <label>Air Conditioning</label>
-        </div>
+          <div className="flex gap-2 px-2 py-1 rounded-md">
+            <input type="checkbox" name="airConditioning" />
+            <label>Air Conditioning</label>
+          </div>
 
-        <div className="flex gap-2 p-1 m-1 bg-indigo-50 rounded-md items-center content-start">
-          <input type="checkbox" name="parkingSpace" />
-          <label>Parking</label>
-        </div>
+          <div className="flex gap-2 px-2 py-1 rounded-md">
+            <input type="checkbox" name="parkingSpace" />
+            <label>Parking</label>
+          </div>
 
-        <div className="flex gap-2 p-1 m-1 bg-indigo-50 rounded-md items-center content-start">
-          <input type="checkbox" name="pets" />
-          <label>Pets</label>
-        </div>
+          <div className="flex gap-2 px-2 py-1 rounded-md">
+            <input type="checkbox" name="pets" />
+            <label>Pets</label>
+          </div>
 
-        <div className="flex gap-2 p-1 m-1 bg-indigo-50 rounded-md items-center content-start">
-          <input type="checkbox" name="pool" />
-          <label>Pool</label>
-        </div>
+          <div className="flex gap-2 px-2 py-1 rounded-md">
+            <input type="checkbox" name="pool" />
+            <label>Pool</label>
+          </div>
 
-        <div className="flex gap-2 p-1 m-1 bg-indigo-50 rounded-md items-center content-start">
-          <input type="checkbox" name="wifi" />
-          <label>Wifi</label>
-        </div>
+          <div className="flex gap-2 px-2 py-1 rounded-md">
+            <input type="checkbox" name="wifi" />
+            <label>Wifi</label>
+          </div>
 
-        <div className="flex gap-2 p-1 m-1 bg-indigo-50 rounded-md items-center content-start">
-          <input type="checkbox" name="tv" />
-          <label>TV</label>
-        </div>
+          <div className="flex gap-2 px-2 py-1 rounded-md">
+            <input type="checkbox" name="tv" />
+            <label>TV</label>
+          </div>
 
-        <div className="flex gap-2 p-1 m-1 bg-indigo-50 rounded-md items-center content-start">
-          <input
-            type="number"
-            name="maxPrice"
-            className="border-1"
-            step="10"
-            min="0"
-            defaultValue="0"
-          />
-          <label htmlFor="maxPrice">Maximum price</label>
+          <div className="flex gap-2 px-2 py-1 rounded-md">
+            <input
+              type="number"
+              name="maxPrice"
+              className="border-1 border-gray-400 w-11 bg-gray-50"
+              step="10"
+              min="0"
+              defaultValue="0"
+            />
+            <label htmlFor="maxPrice">Max. price</label>
+          </div>
         </div>
       </form>
     </>
