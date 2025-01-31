@@ -23,6 +23,20 @@ export default function AccomodationPage() {
     // Filtering logic
     const fa = accomodations.filter((a) => {
       let isAllTrue = [];
+      if(filters.selIntervalStart && filters.selIntervalEnd) {
+        const matchesAvailableDates = []
+        for (const obj of a.availableDates) {
+          if(
+            filters.selIntervalStart >= new Date(obj.intervalStart) &&
+            filters.selIntervalEnd <= new Date(obj.intervalEnd)
+          ) {
+            matchesAvailableDates.push(true)
+          }
+        }
+        isAllTrue.push(
+          matchesAvailableDates.includes(true)
+        )
+      }
       if (filters.capacity) {
         isAllTrue.push(filters.capacity <= a.capacity);
       }

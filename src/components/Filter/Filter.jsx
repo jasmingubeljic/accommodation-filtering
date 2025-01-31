@@ -28,8 +28,9 @@ export default function Filters(props) {
             selectsRange
             minDate={new Date()}
             isClearable
-            placeholderText="Select dates"
+            placeholderText="📅 Select dates"
             dateFormat="yyyy-MM-dd"
+            // className="hover:cursor-pointer"
           />
           <label htmlFor="Capacity">Reservation dates</label>
         </div>
