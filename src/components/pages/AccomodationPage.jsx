@@ -19,10 +19,11 @@ export default function AccomodationPage() {
   }, []);
 
   useEffect(() => {
-
-    // Filtering logic
+    
+    /* Filtering logic */
     const fa = accomodations.filter((a) => {
-      let isAllTrue = [];
+
+      let conditionsMatchingArray = [];
       if(filters.selIntervalStart && filters.selIntervalEnd) {
         const matchesAvailableDates = []
         for (const obj of a.availableDates) {
@@ -33,36 +34,35 @@ export default function AccomodationPage() {
             matchesAvailableDates.push(true)
           }
         }
-        isAllTrue.push(
-          matchesAvailableDates.includes(true)
+        conditionsMatchingArray.push(
+          matchesAvailableDates.some(value => value === true)
         )
       }
       if (filters.capacity) {
-        isAllTrue.push(filters.capacity <= a.capacity);
+        conditionsMatchingArray.push(filters.capacity <= a.capacity);
       }
       if (filters.airConditioning) {
-        isAllTrue.push(a.amenities.airConditioning);
+        conditionsMatchingArray.push(a.amenities.airConditioning);
       }
       if (filters.parkingSpace) {
-        isAllTrue.push(a.amenities.airConditioning);
+        conditionsMatchingArray.push(a.amenities.airConditioning);
       }
       if (filters.pets) {
-        isAllTrue.push(a.amenities.pets);
+        conditionsMatchingArray.push(a.amenities.pets);
       }
       if (filters.pool) {
-        isAllTrue.push(a.amenities.pool);
+        conditionsMatchingArray.push(a.amenities.pool);
       }
       if (filters.wifi) {
-        isAllTrue.push(a.amenities.wifi);
+        conditionsMatchingArray.push(a.amenities.wifi);
       }
       if (filters.tv) {
-        isAllTrue.push(a.amenities.tv);
+        conditionsMatchingArray.push(a.amenities.tv);
       }
-      return !isAllTrue.includes(false);
+      return conditionsMatchingArray.every(val => val === true)
     });
 
     setFilteredAccomodations(fa);
-    console.log("filters: ", filters);
   }, [filters, accomodations]);
 
 
