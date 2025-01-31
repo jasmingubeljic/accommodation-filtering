@@ -7,6 +7,7 @@ export default function AccomodationPage() {
   const [accomodation, setAccomodation] = useState(false);
   const [accomodations, setAccomodations] = useState([]);
   const [filteredAccomodations, setFilteredAccomodations] = useState([]);
+  const [selDates, setSelDates] = useState(false);
   const [isModalOn, setIsModalOn] = useState(false);
 
   useEffect(() => {
@@ -25,9 +26,51 @@ export default function AccomodationPage() {
     }
   }, [accomodation]);
 
+  useEffect(() => {
+    // calculate
+    console.log("sel dates: ", selDates);
+  }, [selDates]);
+
   const onAccomodationOpening = (a) => {
-    console.log("accomodation selected: ", a);
-    setAccomodation(a);
+    let computedTotalPrice;
+    let minAccomodationPrice;
+    let maxAccomodationPrice;
+    if (selDates) {
+      /* compute total price */
+      const matchingObj = a.pricelistInEuros.filter((obj) => {
+        if (
+          selDates[0] >= new Date(obj.intervalStart) &&
+          selDates[1] < new Date(obj.intervalEnd)
+        ) {
+          return true;
+        }
+      });
+
+      // multiply the price by days
+      const diffInTime = selDates[1] - selDates[0]; // difference in milliseconds
+      const diffInDays = diffInTime / (1000 * 3600 * 24); // convert milliseconds to days
+      computedTotalPrice = matchingObj[0]["pricePerNight"] * diffInDays;
+    } else {
+      // compute min and max
+      minAccomodationPrice = Math.min(
+        ...a.pricelistInEuros.map((item) => item.pricePerNight)
+      );
+      maxAccomodationPrice = Math.max(
+        ...a.pricelistInEuros.map((item) => item.pricePerNight)
+      );
+    }
+
+    // attach prebooking data to accomodation
+    const extendedAccomodationData = {
+      ...a,
+      minAccomodationPrice,
+      maxAccomodationPrice,
+    };
+    if (selDates) {
+      extendedAccomodationData["selDates"] = selDates;
+      extendedAccomodationData["computedTotalPrice"] = computedTotalPrice;
+    }
+    setAccomodation(extendedAccomodationData);
   };
 
   const customStyles = {
@@ -49,13 +92,13 @@ export default function AccomodationPage() {
       <Filters
         accomodations={accomodations}
         onSetFilteredAccomodations={(fa) => setFilteredAccomodations(fa)}
+        onDatesSave={(dates) => setSelDates(dates)}
       />
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
         {filteredAccomodations.map((a) => {
           return (
-            <>
+            <div key={a.id}>
               <div
-                key={a.id}
                 onClick={() => onAccomodationOpening(a)}
                 className="rounded-t-md shadow-sm overflow-hidden hover:shadow-md transition-shadow hover:cursor-pointer"
               >
@@ -76,7 +119,8 @@ export default function AccomodationPage() {
                 isOpen={isModalOn}
                 contentLabel="Example Modal"
                 style={customStyles}
-                // onRequestClose={setIsModalOn(false)}
+                ariaHideApp={false}
+                // onRequestClose={() => setSelDates(false)}
               >
                 <img src={accomodation.image} />
                 <div className="px-3 pt-1 pb-2">
@@ -87,8 +131,18 @@ export default function AccomodationPage() {
                     <br></br>
                     <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
                       <span>Capacity </span>
-                      <span className="font-semibold text-green-700">{accomodation.capacity}</span>
+                      <span className="font-semibold text-green-700">
+                        {accomodation.capacity}
+                      </span>
                     </div>
+                    {accomodation.beachDistanceInMeters && (
+                      <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
+                        <span>Beach Distance </span>
+                        <span className="font-semibold text-green-700">
+                          {accomodation.beachDistanceInMeters}m
+                        </span>
+                      </div>
+                    )}
                     <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
                       Air Conditioning{" "}
                       {accomodation.amenitie?.airConditioning ? (
@@ -137,24 +191,67 @@ export default function AccomodationPage() {
                         <span className="text-gray-700 w-auto text-sm">✖</span>
                       )}
                     </div>
-                    <div className="pt-5 flex justify-between gap-2">
+
+                    {!selDates &&
+                      accomodation.minAccomodationPrice &&
+                      accomodation.maxAccomodationPrice && (
+                        <div className="mt-3 p-2">
+                          <p>
+                            Pricing:{" "}
+                            <b>
+                              €{accomodation.minAccomodationPrice}–
+                              {accomodation.maxAccomodationPrice}
+                            </b>{" "}
+                            (per day)
+                          </p>
+                          <p className="text-gray-500 text-sm">
+                            (Select dates to view pricing for your booking)
+                          </p>
+                        </div>
+                      )}
+
+                    {selDates[0] && selDates[1] && (
+                      <div className="mt-3 p-2">
+                        <p>
+                          Date:{" "}
+                          <b>
+                            {selDates[0]
+                              .toISOString()
+                              .split("T")[0]
+                              .replace(/-/g, "/")}{" "}
+                            -{" "}
+                            {selDates[1]
+                              .toISOString()
+                              .split("T")[0]
+                              .replace(/-/g, "/")}
+                          </b>
+                        </p>
+                        <p>
+                          Total Price:{" "}
+                          <b>€{accomodation?.computedTotalPrice}</b>
+                        </p>
+                      </div>
+                    )}
+
+                    <div className="pt-10 flex justify-between gap-2">
                       <button
-                        className="px-3 py-1 hover:cursor-pointer uppercase text-sm"
+                        className="px-3 py-1 hover:cursor-pointer uppercase text-sm py-2"
                         onClick={() => setIsModalOn(false)}
                       >
-                        {`< Back`}
+                        {`< Nazad`}
                       </button>
                       <button
                         className="bg-zinc-800 hover:bg-zinc-950 transition-all text-white px-4 py-2 border-1 hover:cursor-pointer uppercase text-sm"
-                        onClick={() => console.log("registriraj")}
+                        onClick={() => console.log("Rezerviraj”")}
+                        hidden={!selDates}
                       >
-                        Registriraj
+                        Rezerviraj
                       </button>
                     </div>
                   </div>
                 </div>
               </Modal>
-            </>
+            </div>
           );
         })}
       </div>
