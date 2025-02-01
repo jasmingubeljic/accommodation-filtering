@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { getAccommodations } from "../../util/apiCalls";
+import { customModalStyles } from "../../util/utils"
 import Filters from "../Filter/Filter";
 import Modal from "react-modal";
-import { renderReadableDate } from '../../util/utils';
+import Pill from "../Pills/Pill";
+import PriceRange from "../Prices/PriceRange";
+import BookingInfo from "../Prices/BookingInfo";
 
 export default function AccommodationPage() {
   const [accommodation, setAccommodation] = useState(false);
@@ -40,8 +43,8 @@ export default function AccommodationPage() {
       /* compute total price */
       const matchingObj = a.pricelistInEuros.filter((obj) => {
         if (
-          selDates[0].toISOString().split('T')[0] >= obj.intervalStart &&
-          selDates[1].toISOString().split('T')[0] < obj.intervalEnd
+          selDates[0].toISOString().split("T")[0] >= obj.intervalStart &&
+          selDates[1].toISOString().split("T")[0] < obj.intervalEnd
         ) {
           return true;
         }
@@ -74,19 +77,7 @@ export default function AccommodationPage() {
     setAccommodation(extendedAccommodationData);
   };
 
-  const customStyles = {
-    content: {
-      padding: "0",
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-      maxWidth: "365px",
-      boxShadow: "1px 1px 3px rgb(224, 224, 224)",
-    },
-  };
+
 
   return (
     <>
@@ -119,7 +110,7 @@ export default function AccommodationPage() {
               <Modal
                 isOpen={isModalOn}
                 contentLabel="Example Modal"
-                style={customStyles}
+                style={customModalStyles}
                 ariaHideApp={false}
                 // onRequestClose={() => setSelDates(false)}
               >
@@ -130,103 +121,30 @@ export default function AccommodationPage() {
                       {accommodation.title}
                     </h1>
                     <br></br>
-                    <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
-                      <span>Capacity </span>
-                      <span className="font-semibold text-green-700">
-                        {accommodation.capacity}
-                      </span>
-                    </div>
-                    {accommodation.beachDistanceInMeters && (
-                      <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
-                        <span>Beach Distance </span>
-                        <span className="font-semibold text-green-700">
-                          {accommodation.beachDistanceInMeters}m
-                        </span>
-                      </div>
-                    )}
-                    <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
-                      Air Conditioning{" "}
-                      {accommodation.amenitie?.airConditioning ? (
-                        <span className="text-green-600">✔</span>
-                      ) : (
-                        <span className="text-gray-700 w-auto text-sm">✖</span>
-                      )}
-                    </div>
-                    <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
-                      Parking{" "}
-                      {accommodation.amenities?.parking ? (
-                        <span className="text-green-600 w-auto">✔</span>
-                      ) : (
-                        <span className="text-gray-700 w-auto text-sm">✖</span>
-                      )}
-                    </div>
-                    <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
-                      Pets{" "}
-                      {accommodation.amenities?.pets ? (
-                        <span className="text-green-600">✔</span>
-                      ) : (
-                        <span className="text-gray-700 w-auto text-sm">✖</span>
-                      )}
-                    </div>
-                    <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
-                      Pool{" "}
-                      {accommodation.amenities?.pool ? (
-                        <span className="text-green-600">✔</span>
-                      ) : (
-                        <span className="text-gray-700 w-auto text-sm">✖</span>
-                      )}
-                    </div>
-                    <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
-                      Wifi{" "}
-                      {accommodation.amenities?.wifi ? (
-                        <span className="text-green-500">✔</span>
-                      ) : (
-                        <span className="text-gray-700 w-auto text-sm">✖</span>
-                      )}
-                    </div>
-                    <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
-                      TV{" "}
-                      {accommodation.amenities?.tv ? (
-                        <span className="text-green-600 w-auto">✔</span>
-                      ) : (
-                        <span className="text-gray-700 w-auto text-sm">✖</span>
-                      )}
-                    </div>
+                    <Pill title="Capacity" value={accommodation.capacity} />
+                    <Pill
+                      title="Beach Distance"
+                      value={`${accommodation.beachDistanceInMeters}m`}
+                    />
+                    <Pill
+                      title="Air Conditioning"
+                      value={accommodation.amenities?.airConditioning}
+                    />
+                    <Pill
+                      title="Parking"
+                      value={accommodation.amenities?.parkingSpace}
+                    />
+                    <Pill title="Pets" value={accommodation.amenities?.pets} />
+                    <Pill title="Pool" value={accommodation.amenities?.pool} />
+                    <Pill title="Wifi" value={accommodation.amenities?.wifi} />
+                    <Pill title="TV" value={accommodation.amenities?.tv} />
 
-                    {!selDates &&
-                      accommodation.minAccommodationPrice &&
-                      accommodation.maxAccommodationPrice && (
-                        <div className="mt-3 p-2">
-                          <p>
-                            Pricing:{" "}
-                            <b>
-                              €{accommodation.minAccommodationPrice}–
-                              {accommodation.maxAccommodationPrice}
-                            </b>{" "}
-                            (per day)
-                          </p>
-                          <p className="text-gray-500 text-sm">
-                            (Select dates to view pricing for your booking)
-                          </p>
-                        </div>
-                      )}
-
-                    {selDates[0] && selDates[1] && (
-                      <div className="mt-3 p-2">
-                        <p>
-                          Date:{" "}
-                          <b>
-                            {renderReadableDate(selDates[0])}{" "}
-                            -{" "}
-                            {renderReadableDate(selDates[1])}
-                          </b>
-                        </p>
-                        <p>
-                          Total Price:{" "}
-                          <b>€{accommodation?.computedTotalPrice}</b>
-                        </p>
-                      </div>
-                    )}
+                    <PriceRange
+                      minPrice={accommodation.minAccommodationPrice}
+                      maxPrice={accommodation.maxAccommodationPrice}
+                      selDates={selDates}
+                    />
+                    <BookingInfo selDates={selDates} accommodation={accommodation} />
 
                     <div className="pt-10 flex justify-between gap-2">
                       <button
