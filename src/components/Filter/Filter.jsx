@@ -140,7 +140,7 @@ export default function Filters(props) {
     <>
       <form onChange={onFilteringHandler} className="my-10 shadow-sm bg-indigo-50 rounded-md">
         <div className="p-1 m-1 w-auto inline-block bg-gray-50 rounded-md">
-          <label htmlFor="Capacity">Reservation dates:</label>
+          <label htmlFor="Capacity">Arrival and Departure:</label>
           <br></br>
           <DatePicker
             selected={startDate}
@@ -172,37 +172,37 @@ export default function Filters(props) {
             <label htmlFor="Capacity">Guests</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md">
-            <input type="checkbox" name="airConditioning" />
-            <label>Air Conditioning</label>
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
+            <input type="checkbox" name="airConditioning" className="w-4 h-4" />
+            <label className="mb-1">Air Conditioning</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md">
-            <input type="checkbox" name="parkingSpace" />
-            <label>Parking</label>
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
+            <input type="checkbox" name="parkingSpace"  className="w-4 h-4" />
+            <label className="mb-1">Parking</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md">
-            <input type="checkbox" name="pets" />
-            <label>Pets</label>
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
+            <input type="checkbox" name="pets"  className="w-4 h-4"/>
+            <label className="mb-1">Pets</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md">
-            <input type="checkbox" name="pool" />
-            <label>Pool</label>
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
+            <input type="checkbox" name="pool"  className="w-4 h-4"/>
+            <label className="mb-1">Pool</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md">
-            <input type="checkbox" name="wifi" />
-            <label>Wifi</label>
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
+            <input type="checkbox" name="wifi" className="w-4 h-4" />
+            <label className="mb-1">Wifi</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md">
-            <input type="checkbox" name="tv" />
-            <label>TV</label>
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
+            <input type="checkbox" name="tv" className="w-4 h-4" />
+            <label className="mb-1">TV</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md">
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
             <input
               type="number"
               name="maxPrice"
