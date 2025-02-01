@@ -138,8 +138,11 @@ export default function Filters(props) {
 
   return (
     <>
-      <form onChange={onFilteringHandler} className="my-10 shadow-sm bg-indigo-50 rounded-md">
-        <div className="p-1 m-1 w-auto inline-block bg-gray-50 rounded-md">
+      <form
+        onChange={onFilteringHandler}
+        className="my-10 shadow-sm bg-indigo-50 rounded-md md:px-4 md:py-2"
+      >
+        <div className="p-1 m-1 mb-3 w-auto inline-block rounded-md">
           <label htmlFor="Capacity">Arrival and Departure:</label>
           <br></br>
           <DatePicker
@@ -155,12 +158,12 @@ export default function Filters(props) {
             isClearable
             placeholderText="📅 Select dates"
             dateFormat="yyyy/MM/dd"
-            className="max-w-3xs w-100"
+            className="my-1 max-w-3xs w-100 bg-white px-2 py-1"
           />
         </div>
         <br></br>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-1 p-1 rounded-md">
+        <div className="grid grid-cols-2 md:grid-cols-4 md:gap-1 rounded-md">
           <div className="flex gap-2 px-2 py-1 rounded-md">
             <input
               type="number"
@@ -174,32 +177,35 @@ export default function Filters(props) {
 
           <div className="flex gap-2 px-2 py-1 rounded-md items-center">
             <input type="checkbox" name="airConditioning" className="w-4 h-4" />
-            <label className="mb-1">Air Conditioning</label>
+            <label className="mb-1 whitespace-nowrap">
+              <span className="hidden md:block">Air Conditioning</span>
+              <span className="md:hidden">AC</span>
+            </label>
           </div>
 
           <div className="flex gap-2 px-2 py-1 rounded-md items-center">
-            <input type="checkbox" name="parkingSpace"  className="w-4 h-4" />
-            <label className="mb-1">Parking</label>
+            <input type="checkbox" name="parkingSpace" className="w-4 h-4" />
+            <label className="mb-1 whitespace-nowrap">Parking</label>
           </div>
 
           <div className="flex gap-2 px-2 py-1 rounded-md items-center">
-            <input type="checkbox" name="pets"  className="w-4 h-4"/>
-            <label className="mb-1">Pets</label>
+            <input type="checkbox" name="pets" className="w-4 h-4" />
+            <label className="mb-1 whitespace-nowrap">Pets</label>
           </div>
 
           <div className="flex gap-2 px-2 py-1 rounded-md items-center">
-            <input type="checkbox" name="pool"  className="w-4 h-4"/>
-            <label className="mb-1">Pool</label>
+            <input type="checkbox" name="pool" className="w-4 h-4" />
+            <label className="mb-1 whitespace-nowrap">Pool</label>
           </div>
 
           <div className="flex gap-2 px-2 py-1 rounded-md items-center">
             <input type="checkbox" name="wifi" className="w-4 h-4" />
-            <label className="mb-1">Wifi</label>
+            <label className="mb-1 whitespace-nowrap">Wifi</label>
           </div>
 
           <div className="flex gap-2 px-2 py-1 rounded-md items-center">
             <input type="checkbox" name="tv" className="w-4 h-4" />
-            <label className="mb-1">TV</label>
+            <label className="mb-1 whitespace-nowrap">TV</label>
           </div>
 
           <div className="flex gap-2 px-2 py-1 rounded-md items-center">
@@ -211,7 +217,9 @@ export default function Filters(props) {
               min="0"
               defaultValue="0"
             />
-            <label htmlFor="maxPrice">Max. price</label>
+            <label htmlFor="maxPrice" className="whitespace-nowrap">
+              Max Price
+            </label>
           </div>
         </div>
       </form>
