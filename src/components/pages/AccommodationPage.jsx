@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getAccommodations } from "../../util/apiCalls";
 import Filters from "../Filter/Filter";
 import Modal from "react-modal";
+import { renderReadableDate } from '../../util/utils';
 
 export default function AccommodationPage() {
   const [accommodation, setAccommodation] = useState(false);
@@ -39,8 +40,8 @@ export default function AccommodationPage() {
       /* compute total price */
       const matchingObj = a.pricelistInEuros.filter((obj) => {
         if (
-          selDates[0] >= new Date(obj.intervalStart) &&
-          selDates[1] < new Date(obj.intervalEnd)
+          selDates[0].toISOString().split('T')[0] >= obj.intervalStart &&
+          selDates[1].toISOString().split('T')[0] < obj.intervalEnd
         ) {
           return true;
         }
@@ -215,15 +216,9 @@ export default function AccommodationPage() {
                         <p>
                           Date:{" "}
                           <b>
-                            {selDates[0]
-                              .toISOString()
-                              .split("T")[0]
-                              .replace(/-/g, "/")}{" "}
+                            {renderReadableDate(selDates[0])}{" "}
                             -{" "}
-                            {selDates[1]
-                              .toISOString()
-                              .split("T")[0]
-                              .replace(/-/g, "/")}
+                            {renderReadableDate(selDates[1])}
                           </b>
                         </p>
                         <p>

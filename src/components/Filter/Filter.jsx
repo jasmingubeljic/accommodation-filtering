@@ -76,35 +76,33 @@ export default function Filters(props) {
       }
 
       return conditionsMatchingArray.every((val) => val === true);
-    }); // ---- end of the .filter() ----
+    }); // ---- end of the .filter() method ----
+
     console.log("filters: ", filters);
     props.onSetFilteredAccommodations(fa);
-  }, [filters, props]);
+  }, [filters, props.accomodations]);
 
-  const onChange = (dates) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-    if (start == null && end == null) {
-      props.onDatesSave(false);
-    } else {
-      props.onDatesSave(dates);
-    }
-  };
 
   const onFilteringHandler = useCallback((event) => {
     // handle range picker
     if (!event.target) {
+      const [start, end] = event;
+      setStartDate(start);
+      setEndDate(end);
+      if (start == null && end == null) {
+        props.onDatesSave(false);
+      } else {
+        props.onDatesSave(event);
+      }
       if (event.length > 1) {
-        setFilters((prevState) => {
+        return setFilters((prevState) => {
           return {
             ...prevState,
-            selIntervalStart: event[0],
-            selIntervalEnd: event[1],
+            selIntervalStart: start,
+            selIntervalEnd: end,
           };
         });
       }
-      return;
     }
 
     // handle remaining filters
@@ -134,7 +132,7 @@ export default function Filters(props) {
         };
       });
     }
-  }, []);
+  }, [props]);
 
   return (
     <>
@@ -149,7 +147,6 @@ export default function Filters(props) {
             selected={startDate}
             onChange={(event) => {
               onFilteringHandler(event);
-              onChange(event);
             }}
             startDate={startDate}
             endDate={endDate}
