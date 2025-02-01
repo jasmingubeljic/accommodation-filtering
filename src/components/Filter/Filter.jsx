@@ -79,7 +79,7 @@ export default function Filters(props) {
     }); // ---- end of the .filter() ----
     console.log("filters: ", filters);
     props.onSetFilteredAccommodations(fa);
-  }, [filters, props.accommodations]);
+  }, [filters, props]);
 
   const onChange = (dates) => {
     const [start, end] = dates;
