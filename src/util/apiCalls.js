@@ -1,4 +1,4 @@
-export const getAccomodations = async (onSuccess, onError) => {
+export const getAccommodations = async (onSuccess, onError) => {
   try {
     const response = await fetch("https://api.adriatic.hr/test/accommodation");
 

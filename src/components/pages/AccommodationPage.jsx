@@ -1,40 +1,40 @@
 import { useEffect, useState } from "react";
-import { getAccomodations } from "../../util/apiCalls";
+import { getAccommodations } from "../../util/apiCalls";
 import Filters from "../Filter/Filter";
 import Modal from "react-modal";
 
-export default function AccomodationPage() {
-  const [accomodation, setAccomodation] = useState(false);
-  const [accomodations, setAccomodations] = useState([]);
-  const [filteredAccomodations, setFilteredAccomodations] = useState([]);
+export default function AccommodationPage() {
+  const [accommodation, setAccommodation] = useState(false);
+  const [accommodations, setAccommodations] = useState([]);
+  const [filteredAccommodations, setFilteredAccommodations] = useState([]);
   const [selDates, setSelDates] = useState(false);
   const [isModalOn, setIsModalOn] = useState(false);
 
   useEffect(() => {
-    getAccomodations(
+    getAccommodations(
       (r) => {
-        setAccomodations(r);
-        setFilteredAccomodations(r);
+        setAccommodations(r);
+        setFilteredAccommodations(r);
       },
       (err) => console.log(err)
     );
   }, []);
 
   useEffect(() => {
-    if (accomodation) {
+    if (accommodation) {
       setIsModalOn(true);
     }
-  }, [accomodation]);
+  }, [accommodation]);
 
   useEffect(() => {
     // calculate
     console.log("sel dates: ", selDates);
   }, [selDates]);
 
-  const onAccomodationOpening = (a) => {
+  const onAccommodationOpening = (a) => {
     let computedTotalPrice;
-    let minAccomodationPrice;
-    let maxAccomodationPrice;
+    let minAccommodationPrice;
+    let maxAccommodationPrice;
     if (selDates) {
       /* compute total price */
       const matchingObj = a.pricelistInEuros.filter((obj) => {
@@ -52,25 +52,25 @@ export default function AccomodationPage() {
       computedTotalPrice = matchingObj[0]["pricePerNight"] * diffInDays;
     } else {
       // compute min and max
-      minAccomodationPrice = Math.min(
+      minAccommodationPrice = Math.min(
         ...a.pricelistInEuros.map((item) => item.pricePerNight)
       );
-      maxAccomodationPrice = Math.max(
+      maxAccommodationPrice = Math.max(
         ...a.pricelistInEuros.map((item) => item.pricePerNight)
       );
     }
 
-    // attach prebooking data to accomodation
-    const extendedAccomodationData = {
+    // attach prebooking data to accommodation
+    const extendedAccommodationData = {
       ...a,
-      minAccomodationPrice,
-      maxAccomodationPrice,
+      minAccommodationPrice,
+      maxAccommodationPrice,
     };
     if (selDates) {
-      extendedAccomodationData["selDates"] = selDates;
-      extendedAccomodationData["computedTotalPrice"] = computedTotalPrice;
+      extendedAccommodationData["selDates"] = selDates;
+      extendedAccommodationData["computedTotalPrice"] = computedTotalPrice;
     }
-    setAccomodation(extendedAccomodationData);
+    setAccommodation(extendedAccommodationData);
   };
 
   const customStyles = {
@@ -90,16 +90,16 @@ export default function AccomodationPage() {
   return (
     <>
       <Filters
-        accomodations={accomodations}
-        onSetFilteredAccomodations={(fa) => setFilteredAccomodations(fa)}
+        accommodations={accommodations}
+        onSetFilteredAccommodations={(fa) => setFilteredAccommodations(fa)}
         onDatesSave={(dates) => setSelDates(dates)}
       />
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
-        {filteredAccomodations.map((a) => {
+        {filteredAccommodations.map((a) => {
           return (
             <div key={a.id}>
               <div
-                onClick={() => onAccomodationOpening(a)}
+                onClick={() => onAccommodationOpening(a)}
                 className="rounded-t-md shadow-sm overflow-hidden hover:shadow-md transition-shadow hover:cursor-pointer"
               >
                 <img src={a.image} className="w-100 aspect-9/5 object-cover" />
@@ -122,30 +122,30 @@ export default function AccomodationPage() {
                 ariaHideApp={false}
                 // onRequestClose={() => setSelDates(false)}
               >
-                <img src={accomodation.image} />
+                <img src={accommodation.image} />
                 <div className="px-3 pt-1 pb-2">
                   <div>
                     <h1 className="text-xl font-semibold uppercase">
-                      {accomodation.title}
+                      {accommodation.title}
                     </h1>
                     <br></br>
                     <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
                       <span>Capacity </span>
                       <span className="font-semibold text-green-700">
-                        {accomodation.capacity}
+                        {accommodation.capacity}
                       </span>
                     </div>
-                    {accomodation.beachDistanceInMeters && (
+                    {accommodation.beachDistanceInMeters && (
                       <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
                         <span>Beach Distance </span>
                         <span className="font-semibold text-green-700">
-                          {accomodation.beachDistanceInMeters}m
+                          {accommodation.beachDistanceInMeters}m
                         </span>
                       </div>
                     )}
                     <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
                       Air Conditioning{" "}
-                      {accomodation.amenitie?.airConditioning ? (
+                      {accommodation.amenitie?.airConditioning ? (
                         <span className="text-green-600">✔</span>
                       ) : (
                         <span className="text-gray-700 w-auto text-sm">✖</span>
@@ -153,7 +153,7 @@ export default function AccomodationPage() {
                     </div>
                     <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
                       Parking{" "}
-                      {accomodation.amenities?.parking ? (
+                      {accommodation.amenities?.parking ? (
                         <span className="text-green-600 w-auto">✔</span>
                       ) : (
                         <span className="text-gray-700 w-auto text-sm">✖</span>
@@ -161,7 +161,7 @@ export default function AccomodationPage() {
                     </div>
                     <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
                       Pets{" "}
-                      {accomodation.amenities?.pets ? (
+                      {accommodation.amenities?.pets ? (
                         <span className="text-green-600">✔</span>
                       ) : (
                         <span className="text-gray-700 w-auto text-sm">✖</span>
@@ -169,7 +169,7 @@ export default function AccomodationPage() {
                     </div>
                     <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
                       Pool{" "}
-                      {accomodation.amenities?.pool ? (
+                      {accommodation.amenities?.pool ? (
                         <span className="text-green-600">✔</span>
                       ) : (
                         <span className="text-gray-700 w-auto text-sm">✖</span>
@@ -177,7 +177,7 @@ export default function AccomodationPage() {
                     </div>
                     <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
                       Wifi{" "}
-                      {accomodation.amenities?.wifi ? (
+                      {accommodation.amenities?.wifi ? (
                         <span className="text-green-500">✔</span>
                       ) : (
                         <span className="text-gray-700 w-auto text-sm">✖</span>
@@ -185,7 +185,7 @@ export default function AccomodationPage() {
                     </div>
                     <div className="inline-block px-4 py-1 m-1 border-1 border-gray-500 rounded-2xl w-auto whitespace-nowrap">
                       TV{" "}
-                      {accomodation.amenities?.tv ? (
+                      {accommodation.amenities?.tv ? (
                         <span className="text-green-600 w-auto">✔</span>
                       ) : (
                         <span className="text-gray-700 w-auto text-sm">✖</span>
@@ -193,14 +193,14 @@ export default function AccomodationPage() {
                     </div>
 
                     {!selDates &&
-                      accomodation.minAccomodationPrice &&
-                      accomodation.maxAccomodationPrice && (
+                      accommodation.minAccommodationPrice &&
+                      accommodation.maxAccommodationPrice && (
                         <div className="mt-3 p-2">
                           <p>
                             Pricing:{" "}
                             <b>
-                              €{accomodation.minAccomodationPrice}–
-                              {accomodation.maxAccomodationPrice}
+                              €{accommodation.minAccommodationPrice}–
+                              {accommodation.maxAccommodationPrice}
                             </b>{" "}
                             (per day)
                           </p>
@@ -228,7 +228,7 @@ export default function AccomodationPage() {
                         </p>
                         <p>
                           Total Price:{" "}
-                          <b>€{accomodation?.computedTotalPrice}</b>
+                          <b>€{accommodation?.computedTotalPrice}</b>
                         </p>
                       </div>
                     )}

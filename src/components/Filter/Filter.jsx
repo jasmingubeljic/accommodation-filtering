@@ -9,7 +9,7 @@ export default function Filters(props) {
 
   useEffect(() => {
     /* Filtering logic */
-    const fa = props.accomodations.filter((a) => {
+    const fa = props.accommodations.filter((a) => {
       let conditionsMatchingArray = [];
       if (filters.selIntervalStart && filters.selIntervalEnd) {
         const matchesAvailableDates = [];
@@ -78,8 +78,8 @@ export default function Filters(props) {
       return conditionsMatchingArray.every((val) => val === true);
     }); // ---- end of the .filter() ----
     console.log("filters: ", filters);
-    props.onSetFilteredAccomodations(fa);
-  }, [filters, props.accomodations]);
+    props.onSetFilteredAccommodations(fa);
+  }, [filters, props.accommodations]);
 
   const onChange = (dates) => {
     const [start, end] = dates;

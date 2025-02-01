@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Container from "./components/Container/Container";
-import AccomodationPage from "./components/pages/AccomodationPage";
+import AccommodationPage from "./components/pages/AccommodationPage";
 import NotFoundPage from "./components/pages/NotFoundPage";
-import AccomodationDetailsPage from "./components/pages/AccomodationDetailsPage";
+import AccommodationDetailsPage from "./components/pages/AccommodationDetailsPage";
 import './App.css'
 
 function App() {
@@ -13,8 +13,8 @@ function App() {
       id: "wrapperComponent",
       errorElement: <NotFoundPage />,
       children: [
-        { path: "/", element: <AccomodationPage /> },
-        { path: "/accomodation/:id", element: <AccomodationDetailsPage />}
+        { path: "/", element: <AccommodationPage /> },
+        { path: "/accommodation/:id", element: <AccommodationDetailsPage />}
       ],
     },
   ]);
