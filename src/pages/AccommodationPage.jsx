@@ -49,11 +49,11 @@ export default function AccommodationPage() {
     let minAccommodationPrice;
     let maxAccommodationPrice;
     if (selDates) {
-      /* compute total price */
+      /* c o m p u t e   t o t a l   p r i c e */
       const datesInRange = getDatesInRange(selDates[0], selDates[1]);
       const pricesArray = [];
       for (const date of datesInRange) {
-        const d = date.toISOString().split("T")[0];
+        const d = renderReadableDate(date)
         const matchingObj = a.pricelistInEuros.find((obj) => {
           if (d >= obj.intervalStart && d < obj.intervalEnd) {
             return true;
@@ -61,7 +61,7 @@ export default function AccommodationPage() {
         });
         pricesArray.push(matchingObj.pricePerNight);
       }
-      pricesArray.pop(); // remove the last price of the interval - since it is a departure date 
+      pricesArray.pop(); // remove the last price of the interval - since it is a departure date
       computedTotalPrice = sumArrayNumbers(pricesArray);
     } else {
       // compute min and max
