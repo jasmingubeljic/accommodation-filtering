@@ -9,7 +9,8 @@ export const getAccommodations = async (onSuccess, onError) => {
     const r = await response.json();
     onSuccess(r);
   } catch (error) {
-    onError(error instanceof Error ? error : new Error("Unknown error occurred"));
+    onError(
+      error instanceof Error ? error : new Error("Unknown error occurred")
+    );
   }
 };
-

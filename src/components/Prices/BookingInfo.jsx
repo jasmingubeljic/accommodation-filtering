@@ -1,4 +1,4 @@
-import { renderReadableDate, formatPrice } from "../../util/utils"
+import { renderReadableDate, formatPrice } from "../../util/utils";
 
 export default function BookingInfo({ selDates, accommodation }) {
   if (selDates[0] && selDates[1]) {
