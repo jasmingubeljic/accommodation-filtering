@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAccommodations } from "../util/apiCalls";
-import { customModalStyles, renderReadableDate } from "../util/utils"
-import { v4 as uuidv4 } from 'uuid';
+import {
+  customModalStyles,
+  renderReadableDate,
+  getDatesInRange,
+  sumArrayNumbers,
+} from "../util/utils";
+import { v4 as uuidv4 } from "uuid";
 import Filters from "../components/Filter/Filter";
 import Modal from "react-modal";
 import Pill from "../components/Pills/Pill";
@@ -16,7 +21,7 @@ export default function AccommodationPage() {
   const [selDates, setSelDates] = useState(false);
   const [selGuestCount, setSelGuestCount] = useState(1);
   const [isModalOn, setIsModalOn] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAccommodations(
@@ -45,19 +50,19 @@ export default function AccommodationPage() {
     let maxAccommodationPrice;
     if (selDates) {
       /* compute total price */
-      const matchingObj = a.pricelistInEuros.filter((obj) => {
-        if (
-          selDates[0].toISOString().split("T")[0] >= obj.intervalStart &&
-          selDates[1].toISOString().split("T")[0] < obj.intervalEnd
-        ) {
-          return true;
-        }
-      });
-
-      // multiply the price by days
-      const diffInTime = selDates[1] - selDates[0]; // difference in milliseconds
-      const diffInDays = diffInTime / (1000 * 3600 * 24); // convert milliseconds to days
-      computedTotalPrice = matchingObj[0]["pricePerNight"] * diffInDays;
+      const datesInRange = getDatesInRange(selDates[0], selDates[1]);
+      const pricesArray = [];
+      for (const date of datesInRange) {
+        const d = date.toISOString().split("T")[0];
+        const matchingObj = a.pricelistInEuros.find((obj) => {
+          if (d >= obj.intervalStart && d < obj.intervalEnd) {
+            return true;
+          }
+        });
+        pricesArray.push(matchingObj.pricePerNight);
+      }
+      pricesArray.pop(); // remove the last price of the interval - since it is a departure date 
+      computedTotalPrice = sumArrayNumbers(pricesArray);
     } else {
       // compute min and max
       minAccommodationPrice = Math.min(
@@ -81,22 +86,23 @@ export default function AccommodationPage() {
     setAccommodation(extendedAccommodationData);
   };
 
-
   const saveBooking = () => {
-    const bookingData = {}
-    bookingData['id'] = uuidv4()
-    bookingData['accommodationId'] = accommodation.id
-    bookingData['accommodationTitle'] = accommodation.title
-    bookingData['guestCount'] = selGuestCount
-    bookingData['selDates'] = accommodation.selDates
-    bookingData['selDates'] = [renderReadableDate(selDates[0]), renderReadableDate(selDates[1])] // convert date object to string for JSON below
-    bookingData['totalPrice'] = accommodation.computedTotalPrice
-    bookingData['bookingStatus'] = 'submitted'
-    console.log("bookingData: ", bookingData)
-    localStorage.setItem('booking', JSON.stringify(bookingData)) // simulate db store
-    navigate('/booking/'+bookingData['id'])
-  }
-
+    const bookingData = {};
+    bookingData["id"] = uuidv4();
+    bookingData["accommodationId"] = accommodation.id;
+    bookingData["accommodationTitle"] = accommodation.title;
+    bookingData["guestCount"] = selGuestCount;
+    bookingData["selDates"] = accommodation.selDates;
+    bookingData["selDates"] = [
+      renderReadableDate(selDates[0]),
+      renderReadableDate(selDates[1]),
+    ]; // convert date object to string for JSON below
+    bookingData["totalPrice"] = accommodation.computedTotalPrice;
+    bookingData["bookingStatus"] = "submitted";
+    console.log("bookingData: ", bookingData);
+    localStorage.setItem("booking", JSON.stringify(bookingData)); // simulate db store
+    navigate("/booking/" + bookingData["id"]);
+  };
 
   return (
     <>
@@ -164,7 +170,10 @@ export default function AccommodationPage() {
                       maxPrice={accommodation.maxAccommodationPrice}
                       selDates={selDates}
                     />
-                    <BookingInfo selDates={selDates} accommodation={accommodation} />
+                    <BookingInfo
+                      selDates={selDates}
+                      accommodation={accommodation}
+                    />
 
                     <div className="pt-10 flex justify-between gap-2">
                       <button

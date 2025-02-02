@@ -1,5 +1,5 @@
 export function renderReadableDate(date) {
-  if(!date) return
+  if (!date) return;
   const dateCopy = structuredClone(date);
   // Manually adjust for the desired time zone (e.g., CET)
   const localOffset = dateCopy.getTimezoneOffset(); // Get the local timezone offset in minutes
@@ -8,10 +8,27 @@ export function renderReadableDate(date) {
   return dateCopy.toISOString().split("T")[0];
 }
 
-export function formatPrice (price) {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(price)
+export function formatPrice(price) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "EUR",
+  }).format(price);
 }
 
+export function getDatesInRange(startDate, endDate) {
+  let dates = [];
+  let currentDate = new Date(startDate);
+
+  while (currentDate <= endDate) {
+    dates.push(new Date(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  return dates;
+}
+
+export function sumArrayNumbers(array) {
+  return array.reduce((a, b) => a + b, 0)
+}
 
 export const customModalStyles = {
   content: {
