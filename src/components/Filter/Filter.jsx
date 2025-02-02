@@ -212,7 +212,7 @@ export default function Filters(props) {
               className="border-1 border-gray-400 w-11 bg-gray-50"
               step="10"
               min="0"
-              defaultValue="0"
+              defaultValue=""
             />
             <label htmlFor="maxPrice" className="whitespace-nowrap text-sm md:text-base">
               Max Price
