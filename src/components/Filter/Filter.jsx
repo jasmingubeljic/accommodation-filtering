@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export default function Filters(props) {
   const [filters, setFilters] = useState({});
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
@@ -145,18 +145,17 @@ export default function Filters(props) {
           <label htmlFor="Capacity">Arrival and Departure:</label>
           <br></br>
           <DatePicker
-            selected={startDate}
+            selectsRange={true}
+            startDate={startDate}
+            endDate={endDate}
             onChange={(event) => {
               onFilteringHandler(event);
             }}
-            startDate={startDate}
-            endDate={endDate}
-            selectsRange
             minDate={new Date()}
-            isClearable
+            isClearable={true}
             placeholderText="📅 Select dates"
             dateFormat="yyyy/MM/dd"
-            className="my-1 max-w-3xs w-100 bg-white px-2 py-1"
+            className="my-1 max-w-3xs w-100 bg-white px-2 py-1 border-1 border-indigo-200"
           />
         </div>
         <br></br>
