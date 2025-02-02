@@ -11,11 +11,6 @@ export default function BookingPage() {
     setBooking(JSON.parse(localStorage.getItem("booking")));
   }, []);
 
-  useEffect(() => {
-    console.log("booking from booking page: ", booking);
-  }, [booking]);
-
-
   if (booking && booking.id != params.id) {
     return navigate("/");
   }

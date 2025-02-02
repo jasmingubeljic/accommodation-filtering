@@ -78,7 +78,6 @@ export default function Filters(props) {
       return conditionsMatchingArray.every((val) => val === true);
     }); // ---- end of the .filter() method ----
 
-    console.log("filters: ", filters);
     props.onSetFilteredAccommodations(fa);
   }, [filters, props.accomodations]);
 
@@ -107,7 +106,6 @@ export default function Filters(props) {
 
     // handle remaining filters
     const name = event.target.name;
-    console.log("event:   ", event);
 
     if (event.target.type == "checkbox" && event.target.checked) {
       setFilters((prevState) => {
@@ -164,7 +162,7 @@ export default function Filters(props) {
         <br></br>
 
         <div className="grid grid-cols-2 md:grid-cols-4 md:gap-1 rounded-md">
-          <div className="flex gap-2 px-2 py-1 rounded-md">
+          <div className="flex gap-2 px-2 py-1 items-center rounded-md">
             <input
               type="number"
               name="capacity"
@@ -172,43 +170,43 @@ export default function Filters(props) {
               min="1"
               defaultValue="1"
             />
-            <label htmlFor="Capacity">Guests</label>
+            <label htmlFor="Capacity" className="text-sm md:text-base">Guests</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
             <input type="checkbox" name="airConditioning" className="w-4 h-4" />
             <label className="mb-1 whitespace-nowrap">
-              <span className="hidden md:block">Air Conditioning</span>
-              <span className="md:hidden">AC</span>
+              <span className="hidden md:block text-sm md:text-base">Air Conditioning</span>
+              <span className="md:hidden text-sm md:text-base">AC</span>
             </label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
             <input type="checkbox" name="parkingSpace" className="w-4 h-4" />
-            <label className="mb-1 whitespace-nowrap">Parking</label>
+            <label className="mb-1 whitespace-nowrap text-sm md:text-base">Parking</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
             <input type="checkbox" name="pets" className="w-4 h-4" />
-            <label className="mb-1 whitespace-nowrap">Pets</label>
+            <label className="mb-1 whitespace-nowrap text-sm md:text-base">Pets</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
             <input type="checkbox" name="pool" className="w-4 h-4" />
-            <label className="mb-1 whitespace-nowrap">Pool</label>
+            <label className="mb-1 whitespace-nowrap text-sm md:text-base">Pool</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
             <input type="checkbox" name="wifi" className="w-4 h-4" />
-            <label className="mb-1 whitespace-nowrap">Wifi</label>
+            <label className="mb-1 whitespace-nowrap text-sm md:text-base">Wifi</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
             <input type="checkbox" name="tv" className="w-4 h-4" />
-            <label className="mb-1 whitespace-nowrap">TV</label>
+            <label className="mb-1 whitespace-nowrap text-sm md:text-base">TV</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
             <input
               type="number"
               name="maxPrice"
@@ -217,7 +215,7 @@ export default function Filters(props) {
               min="0"
               defaultValue="0"
             />
-            <label htmlFor="maxPrice" className="whitespace-nowrap">
+            <label htmlFor="maxPrice" className="whitespace-nowrap text-sm md:text-base">
               Max Price
             </label>
           </div>

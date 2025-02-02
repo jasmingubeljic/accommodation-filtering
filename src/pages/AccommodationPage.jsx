@@ -39,11 +39,6 @@ export default function AccommodationPage() {
     }
   }, [accommodation]);
 
-  useEffect(() => {
-    // calculate
-    console.log("sel dates: ", selDates);
-  }, [selDates]);
-
   const onAccommodationOpening = (a) => {
     let computedTotalPrice;
     let minAccommodationPrice;
@@ -100,7 +95,7 @@ export default function AccommodationPage() {
     bookingData["totalPrice"] = accommodation.computedTotalPrice;
     bookingData["bookingStatus"] = "submitted";
     console.log("bookingData: ", bookingData);
-    localStorage.setItem("booking", JSON.stringify(bookingData)); // simulate db store
+    localStorage.setItem("booking", JSON.stringify(bookingData)); // simulate db store in terms of having more permanent storage unlike to react state
     navigate("/booking/" + bookingData["id"]);
   };
 
@@ -122,12 +117,12 @@ export default function AccommodationPage() {
               >
                 <img src={a.image} className="w-100 aspect-9/5 object-cover" />
                 <div className="p-2 flex flex-col gap-1 h-25">
-                  <p className="font-bold uppercase truncate opacity-75">
+                  <p className="font-bold uppercase truncate text-gray-800 text-sm md:text-base">
                     {a.title}
                   </p>
-                  <p className="truncate">Capacity: {a.capacity}</p>
+                  <p className="truncate text-sm md:text-base">Capacity: {a.capacity}</p>
                   {a.beachDistanceInMeters && (
-                    <p className="truncate">
+                    <p className="truncate text-sm md:text-base">
                       Beach Distance: {a.beachDistanceInMeters}m
                     </p>
                   )}
