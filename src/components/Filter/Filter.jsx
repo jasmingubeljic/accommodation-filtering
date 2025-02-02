@@ -173,7 +173,7 @@ export default function Filters(props) {
             <label htmlFor="Capacity" className="text-sm md:text-base">Guests</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
             <input type="checkbox" name="airConditioning" className="w-4 h-4" />
             <label className="mb-1 whitespace-nowrap">
               <span className="hidden md:block text-sm md:text-base">Air Conditioning</span>
@@ -181,32 +181,32 @@ export default function Filters(props) {
             </label>
           </div>
 
-          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
             <input type="checkbox" name="parkingSpace" className="w-4 h-4" />
             <label className="mb-1 whitespace-nowrap text-sm md:text-base">Parking</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
             <input type="checkbox" name="pets" className="w-4 h-4" />
             <label className="mb-1 whitespace-nowrap text-sm md:text-base">Pets</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
             <input type="checkbox" name="pool" className="w-4 h-4" />
             <label className="mb-1 whitespace-nowrap text-sm md:text-base">Pool</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
             <input type="checkbox" name="wifi" className="w-4 h-4" />
             <label className="mb-1 whitespace-nowrap text-sm md:text-base">Wifi</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
             <input type="checkbox" name="tv" className="w-4 h-4" />
             <label className="mb-1 whitespace-nowrap text-sm md:text-base">TV</label>
           </div>
 
-          <div className="flex gap-2 px-2 py-2 md:py-1 rounded-md items-center">
+          <div className="flex gap-2 px-2 py-1 rounded-md items-center">
             <input
               type="number"
               name="maxPrice"
