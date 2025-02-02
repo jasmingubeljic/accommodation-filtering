@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { formatPrice } from "../../util/utils";
+import { formatPrice } from "../util/utils";
 
 export default function BookingPage() {
   const [booking, setBooking] = useState();

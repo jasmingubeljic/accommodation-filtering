@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAccommodations } from "../../util/apiCalls";
-import { customModalStyles, renderReadableDate } from "../../util/utils"
+import { getAccommodations } from "../util/apiCalls";
+import { customModalStyles, renderReadableDate } from "../util/utils"
 import { v4 as uuidv4 } from 'uuid';
-import Filters from "../Filter/Filter";
+import Filters from "../components/Filter/Filter";
 import Modal from "react-modal";
-import Pill from "../Pills/Pill";
-import PriceRange from "../Prices/PriceRange";
-import BookingInfo from "../Prices/BookingInfo";
+import Pill from "../components/Pills/Pill";
+import PriceRange from "../components/Prices/PriceRange";
+import BookingInfo from "../components/Prices/BookingInfo";
 
 export default function AccommodationPage() {
   const [accommodation, setAccommodation] = useState(false);

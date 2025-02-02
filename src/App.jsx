@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Container from "./components/Container/Container";
-import AccommodationPage from "./components/pages/AccommodationPage";
-import NotFoundPage from "./components/pages/NotFoundPage";
-import BookingPage from "./components/pages/BookingPage";
+import AccommodationPage from "./pages/AccommodationPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import BookingPage from "./pages/BookingPage";
 import './App.css'
 
 function App() {
