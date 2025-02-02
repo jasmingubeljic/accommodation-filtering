@@ -1,4 +1,4 @@
-import { renderReadableDate } from "../../util/utils"
+import { renderReadableDate, formatPrice } from "../../util/utils"
 
 export default function BookingInfo({ selDates, accommodation }) {
   if (selDates[0] && selDates[1]) {
@@ -12,7 +12,7 @@ export default function BookingInfo({ selDates, accommodation }) {
           </b>
         </p>
         <p>
-          Total Price: <b>€{accommodation?.computedTotalPrice}</b>
+          Total Price: <b>{formatPrice(accommodation?.computedTotalPrice)}</b>
         </p>
       </div>
     );

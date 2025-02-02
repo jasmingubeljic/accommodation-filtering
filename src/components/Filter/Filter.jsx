@@ -125,6 +125,9 @@ export default function Filters(props) {
     }
 
     if (event.target.type == "number") {
+      if(event.target.name == "capacity") {
+        props.onSetSelGuestCount(event.target.value)
+      }
       setFilters((prevState) => {
         return {
           ...prevState,

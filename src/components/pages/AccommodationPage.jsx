@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAccommodations } from "../../util/apiCalls";
-import { customModalStyles } from "../../util/utils"
+import { customModalStyles, renderReadableDate } from "../../util/utils"
+import { v4 as uuidv4 } from 'uuid';
 import Filters from "../Filter/Filter";
 import Modal from "react-modal";
 import Pill from "../Pills/Pill";
@@ -12,7 +14,9 @@ export default function AccommodationPage() {
   const [accommodations, setAccommodations] = useState([]);
   const [filteredAccommodations, setFilteredAccommodations] = useState([]);
   const [selDates, setSelDates] = useState(false);
+  const [selGuestCount, setSelGuestCount] = useState(1);
   const [isModalOn, setIsModalOn] = useState(false);
+  const navigate = useNavigate()
 
   useEffect(() => {
     getAccommodations(
@@ -78,6 +82,21 @@ export default function AccommodationPage() {
   };
 
 
+  const saveBooking = () => {
+    const bookingData = {}
+    bookingData['id'] = uuidv4()
+    bookingData['accommodationId'] = accommodation.id
+    bookingData['accommodationTitle'] = accommodation.title
+    bookingData['guestCount'] = selGuestCount
+    bookingData['selDates'] = accommodation.selDates
+    bookingData['selDates'] = [renderReadableDate(selDates[0]), renderReadableDate(selDates[1])] // convert date object to string for JSON below
+    bookingData['totalPrice'] = accommodation.computedTotalPrice
+    bookingData['bookingStatus'] = 'submitted'
+    console.log("bookingData: ", bookingData)
+    localStorage.setItem('booking', JSON.stringify(bookingData)) // simulate db store
+    navigate('/booking/'+bookingData['id'])
+  }
+
 
   return (
     <>
@@ -85,6 +104,7 @@ export default function AccommodationPage() {
         accommodations={accommodations}
         onSetFilteredAccommodations={(fa) => setFilteredAccommodations(fa)}
         onDatesSave={(dates) => setSelDates(dates)}
+        onSetSelGuestCount={(selCapacity) => setSelGuestCount(selCapacity)}
       />
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
         {filteredAccommodations.map((a) => {
@@ -117,7 +137,7 @@ export default function AccommodationPage() {
                 <img src={accommodation.image} />
                 <div className="px-3 pt-1 pb-2">
                   <div>
-                    <h1 className="text-xl font-semibold uppercase">
+                    <h1 className="text-xl text-gray-700 font-semibold uppercase mx-1">
                       {accommodation.title}
                     </h1>
                     <br></br>
@@ -155,7 +175,7 @@ export default function AccommodationPage() {
                       </button>
                       <button
                         className="bg-zinc-800 hover:bg-zinc-950 transition-all text-white px-4 py-2 border-1 hover:cursor-pointer uppercase text-sm"
-                        onClick={() => console.log("Rezerviraj”")}
+                        onClick={saveBooking}
                         hidden={!selDates}
                       >
                         Rezerviraj

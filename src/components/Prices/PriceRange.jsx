@@ -1,4 +1,3 @@
-
 export default function renderPriceRange ({minPrice, maxPrice, selDates}) {
     if (selDates) return;
     if (minPrice != maxPrice) {
