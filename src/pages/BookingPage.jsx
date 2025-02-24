@@ -18,22 +18,21 @@ export default function BookingPage() {
   return (
     <div className="mt-10 p-3 rounded-md shadow-md bg-indigo-50">
       <h1 className="text-2xl font-bold text-gray-800">
-        Uspješno ste rezervirali smještaj{" "}
-        <span className="uppercase">{booking?.accommodationTitle}</span>
+        You have booked <span className="uppercase">{booking?.accommodationTitle}</span>
       </h1>
       <div className="mt-10 text-md">
         <div className="mt-5 text-gray-800">
-          <p className="uppercase text-sm tracking-wide">Termin boravka</p>
+          <p className="uppercase text-sm tracking-wide">Dates</p>
           <p className="font-bold">
-            od {booking?.selDates[0]} do {booking?.selDates[1]}
+            from {booking?.selDates[0]} to {booking?.selDates[1]}
           </p>
         </div>
         <div className="mt-5 text-gray-800">
-          <p className="uppercase text-sm tracking-wide">Broj osoba</p>
+          <p className="uppercase text-sm tracking-wide">Guests</p>
           <p className="font-bold">{booking?.guestCount}</p>
         </div>
         <div className="mt-5 text-gray-800">
-          <p className="uppercase text-sm tracking-wide">Ukupna cijena</p>
+          <p className="uppercase text-sm tracking-wide">Total Price</p>
           <p className="font-bold">{formatPrice(booking?.totalPrice)}</p>
         </div>
       </div>
