@@ -1,4 +1,4 @@
-# React + Vite
+# Showcase of a front-end content filtering
 
 ## Clone Repository
 
