@@ -1,5 +1,7 @@
 # Showcase of a front-end content filtering
 
+The app is available at https://accommodation-filtering.vercel.app/
+
 ## Clone Repository
 
 ```
