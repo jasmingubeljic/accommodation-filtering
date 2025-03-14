@@ -3,7 +3,8 @@ import Container from "./components/Container/Container";
 import AccommodationPage from "./pages/AccommodationPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import BookingPage from "./pages/BookingPage";
-import './App.css'
+import { Analytics } from "@vercel/analytics/react";
+import "./App.css";
 
 function App() {
   const router = createBrowserRouter([
@@ -14,15 +15,17 @@ function App() {
       errorElement: <NotFoundPage />,
       children: [
         { path: "/", element: <AccommodationPage /> },
-        { path: "/booking/:id", element: <BookingPage />}
+        { path: "/booking/:id", element: <BookingPage /> },
       ],
     },
   ]);
 
-
   return (
-     <RouterProvider router={router} />
-  )
+    <>
+      <Analytics />
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
-export default App
+export default App;
