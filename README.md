@@ -1,4 +1,6 @@
-# Showcase of a front-end content filtering
+# Showcase of a simple front-end content filtering
+
+Status: completed
 
 The app is available at https://accommodation-filtering.vercel.app/
 
